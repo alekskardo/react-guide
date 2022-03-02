@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { Component } from "react";
+import Person from "./Person/Person";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  state = {
+    persons: [
+      { name: "Max", age: 28 },
+      { name: "Manu", age: 29 },
+      { name: "Stepp", age: 26 },
+    ],
+    otherState: "some other state",
+  };
+
+  switchNameHandler = (newName) => {
+    this.setState({
+      persons: [
+        { name: newName, age: 32 },
+        { name: "Manu", age: 29 },
+        { name: "Stephamoe", age: 27 },
+      ],
+    });
+  };
+
+  nameChangedHandler = (event) => {
+    this.setState({
+      persons: [
+        { name: "Max", age: 32 },
+        { name: event.target.value, age: 29 },
+        { name: "Stephamoe", age: 27 },
+      ],
+    });
+  };
+
+  render() {
+    const style = {
+      backgroundColor: "white",
+      font: "inherit",
+      border: "1px solid blue",
+      padding: "8px",
+      marginBottom: "10px",
+      cursor: "pointer",
+    };
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App!!!</h1>
+        <button
+          style={style}
+          onClick={() => this.switchNameHandler("Maximilian")}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          Switch name
+        </button>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+        />
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+          click={this.switchNameHandler.bind(this, "Maxxxx")}
+          changed={this.nameChangedHandler}
+        >
+          My hobbies: Sports
+        </Person>
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
